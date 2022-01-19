@@ -44,6 +44,11 @@ public class StandardDeck implements Deck {
     }
 
     @Override
+    public int size() {
+        return this.deck.length;
+    }
+
+    @Override
     public void shuffle() {
         final List<Card> cardList = Arrays.asList(this.deck);
         Collections.shuffle(cardList);
