@@ -18,21 +18,16 @@ public class SimpleGame implements Game {
             do {
                 System.out.println("Begin new game...");
                 final Deck deck = this.deckFactory.createDeck();
-                final Card[] discardedCards = new Card[deck.size()];
                 deck.shuffle();
                 deck.display();
-                int playedCardsCount = 0;
                 while (!deck.isEmpty()) {
                     final int numberOfCardsDrawn;
                     System.out.print("How many cards do you want to draw? ");
                     numberOfCardsDrawn = scanner.nextInt();
                     final Card[] drawnCards = deck.draw(numberOfCardsDrawn);
-                    System.arraycopy(drawnCards, 0, discardedCards, playedCardsCount, drawnCards.length);
-                    playedCardsCount += drawnCards.length;
                     System.out.println("Drawn:     " + Arrays.toString(drawnCards));
-                    final Card[] temp = new Card[playedCardsCount];
-                    System.arraycopy(discardedCards, 0, temp, 0, playedCardsCount);
-                    System.out.println("Discarded: " + Arrays.toString(temp));
+                    System.out.print("Discarded: ");
+                    deck.displayDiscarded();
                 }
                 System.out.println("Game over!...");
                 System.out.print("Do you want to play again? [Y/n]: ");

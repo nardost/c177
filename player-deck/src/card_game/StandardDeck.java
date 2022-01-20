@@ -26,21 +26,13 @@ public class StandardDeck implements Deck {
     }
 
     @Override
-    public void display() {
-        final StringBuilder sb = new StringBuilder();
-        sb.append("[");
-        for(int i = this.topIndex; i < this.deck.length; i++) {
-            final Card card = this.deck[i];
-            sb.append(" ");
-            sb.append(card);
-        }
-        sb.append(" ]");
-        System.out.println(sb);
+    public boolean isEmpty() {
+        return this.topIndex > this.deck.length - 1;
     }
 
     @Override
-    public boolean isEmpty() {
-        return this.topIndex > this.deck.length - 1;
+    public int countRemaining() {
+        return this.deck.length - this.topIndex;
     }
 
     @Override
@@ -58,12 +50,26 @@ public class StandardDeck implements Deck {
     public Card[] draw(int n) {
         // Too few cards available
         if(topIndex + n > deck.length) return new Card[0];
-
         // enough cards available
         final Card[] cards = new Card[n];
         System.arraycopy(this.deck, topIndex, cards, 0, n);
-        // move the top index forward by n
+        // advance top index by n
         this.topIndex += n;
         return cards;
+    }
+
+    @Override
+    public void display() {
+        final int numberOfRemainingCards = countRemaining();
+        final Card[] remainingCards = new Card[numberOfRemainingCards];
+        System.arraycopy(this.deck, this.topIndex, remainingCards, 0, numberOfRemainingCards);
+        System.out.println(Arrays.toString(remainingCards));
+    }
+
+    @Override
+    public void displayDiscarded() {
+        final Card[] discarded = new Card[this.topIndex];
+        System.arraycopy(this.deck, 0, discarded, 0, this.topIndex);
+        System.out.println(Arrays.toString(discarded));
     }
 }
