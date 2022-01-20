@@ -40,25 +40,24 @@ public class StateCapitalsApp {
             System.out.printf("%d STATE/CAPITAL PAIRS LOADED.%n", stateCapitals.size());
             System.out.println("==============================");
             stateCapitals.forEach((state, capital) -> System.out.printf("%s - %s%n", state, capital));
+
             final Scanner scanner = new Scanner(System.in);
 
             System.out.print("Please enter the lower limit for capital city population: ");
             final long population = scanner.nextLong();
             System.out.printf("LISTING CAPITALS WITH POPULATIONS GREATER THAN %d%n", population);
-            stateCapitals.forEach((state, capital) -> {
-                if(capital.getPopulation() > population) {
-                    System.out.printf("%s - %s%n", state, capital);
-                }
-            });
+            stateCapitals.entrySet()
+                    .stream()
+                    .filter(e -> e.getValue().getPopulation() > population)
+                    .forEach(e -> System.out.printf("%s - %s%n", e.getKey(), e.getValue()));
 
             System.out.print("Please enter the upper limit for capital city sq mileage: ");
             final double area = scanner.nextDouble();
             System.out.printf("LISTING CAPITALS WITH AREAS LESS THAN %f%n", area);
-            stateCapitals.forEach((state, capital) -> {
-                if(capital.getSquareMileage() > area) {
-                    System.out.printf("%s - %s%n", state, capital);
-                }
-            });
+            stateCapitals.entrySet()
+                    .stream()
+                    .filter(e -> e.getValue().getSquareMileage() > area)
+                    .forEach(e -> System.out.printf("%s - %s%n", e.getKey(), e.getValue()));
         }
     }
 }
