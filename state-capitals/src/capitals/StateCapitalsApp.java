@@ -36,12 +36,12 @@ public class StateCapitalsApp {
                     final long population = Long.parseLong(tokens[2]);
                     final double area = Double.parseDouble(tokens[3]);
                     stateCapitals.put(state, new Capital(capitalName, population, area));
-                } catch (RuntimeException re) {
+                } catch (NumberFormatException | IndexOutOfBoundsException re) {
                     // ignore the malformed record and continue to the next iteration
                 }
             }
         } finally {
-            System.out.printf("%d STATE/CAPITAL PAIRS LOADED.%n", stateCapitals.size());
+            System.out.printf("%n%d STATE/CAPITAL PAIRS LOADED.%n", stateCapitals.size());
             System.out.println("==============================");
             stateCapitals.forEach((state, capital) -> System.out.printf("%s - %s%n", state, capital));
 
@@ -49,7 +49,7 @@ public class StateCapitalsApp {
 
             System.out.print("Please enter the lower limit for capital city population: ");
             final long population = scanner.nextLong();
-            System.out.printf("LISTING CAPITALS WITH POPULATIONS GREATER THAN %d%n", population);
+            System.out.printf("%n%nLISTING CAPITALS WITH POPULATIONS GREATER THAN %d%n", population);
             stateCapitals.entrySet()
                     .stream()
                     .filter(e -> e.getValue().getPopulation() > population)
@@ -57,7 +57,7 @@ public class StateCapitalsApp {
 
             System.out.print("Please enter the upper limit for capital city sq mileage: ");
             final double area = scanner.nextDouble();
-            System.out.printf("LISTING CAPITALS WITH AREAS LESS THAN %f%n", area);
+            System.out.printf("%n%nLISTING CAPITALS WITH AREAS LESS THAN %f%n", area);
             stateCapitals.entrySet()
                     .stream()
                     .filter(e -> e.getValue().getSquareMileage() > area)
