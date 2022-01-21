@@ -29,12 +29,16 @@ public class StateCapitalsApp {
 
             String line;
             while ((line = reader.readLine()) != null) {
-                final String[] tokens = line.split(delimiter);
-                final String state = tokens[0];
-                final String capitalName = tokens[1];
-                final long population = Long.parseLong(tokens[2]);
-                final double area = Double.parseDouble(tokens[3]);
-                stateCapitals.put(state, new Capital(capitalName, population, area));
+                try {
+                    final String[] tokens = line.split(delimiter);
+                    final String state = tokens[0];
+                    final String capitalName = tokens[1];
+                    final long population = Long.parseLong(tokens[2]);
+                    final double area = Double.parseDouble(tokens[3]);
+                    stateCapitals.put(state, new Capital(capitalName, population, area));
+                } catch (RuntimeException re) {
+                    // ignore the malformed record and continue to the next iteration
+                }
             }
         } finally {
             System.out.printf("%d STATE/CAPITAL PAIRS LOADED.%n", stateCapitals.size());
