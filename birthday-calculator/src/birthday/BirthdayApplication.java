@@ -16,7 +16,7 @@ public class BirthdayApplication {
         System.out.println();
 
         // allowed birthday date patterns and corresponding formatters
-        // https://docs.oracle.com/javase/8/docs/api/java/time/format/DateTimeFormatter.html#ofPattern-java.lang.String-
+        // https://docs.oracle.com/javase/8/docs/api/java/time/format/DateTimeFormatter.html#ofPattern-java.lang.String-java.util.Locale-
         Arrays.stream(new String[][] {
                 { "\\d{1,2}/\\d{1,2}/\\d{4}", "dd/MM/yyyy" },
                 { "\\d{1,2}-\\d{1,2}-\\d{4}", "dd-MM-yyyy" }
