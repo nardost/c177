@@ -7,6 +7,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+import static java.time.temporal.ChronoUnit.DAYS;
+import static java.time.temporal.ChronoUnit.YEARS;
+
 public class BirthdayApplication {
 
     final static Map<String, String> dateTimeFormatters = new HashMap<>();
@@ -25,25 +28,28 @@ public class BirthdayApplication {
 
     public static void main(String[] args) {
 
-        final LocalDate today = LocalDate.now();
-
         try (final Scanner scanner = new Scanner(System.in)) {
             String birthdayString;
             System.out.print("What is your birthday? ");
             birthdayString = scanner.next();
+
             final LocalDate birthdate = getLocalDateFromString(birthdayString);
 
-            System.out.printf("That means you were born on a %s!%n", birthdate.getDayOfWeek().toString().toUpperCase());
-
+            final LocalDate today = LocalDate.now();
             final LocalDate thisYearsBirthday = LocalDate.of(today.getYear(), birthdate.getMonth(), birthdate.getDayOfMonth());
-            System.out.printf("This year it falls on a %s...%n", thisYearsBirthday.getDayOfWeek().toString().toUpperCase());
+            final LocalDate nextYearsBirthday = LocalDate.of(today.getYear() + 1, birthdate.getMonth(), birthdate.getDayOfMonth());
 
+            final boolean thisYearsAlreadyPassed = today.until(thisYearsBirthday).getDays() < 0;
+            final LocalDate upcomingBirthday = thisYearsAlreadyPassed ? nextYearsBirthday : thisYearsBirthday;
+            final String fallsFell = thisYearsAlreadyPassed ? "fell" : "falls";
+
+            final long daysLeftToNextBirthday = DAYS.between(today, upcomingBirthday);
+            final long age = YEARS.between(birthdate, upcomingBirthday);
+
+            System.out.printf("That means you were born on a %s!%n", birthdate.getDayOfWeek().toString().toUpperCase());
+            System.out.printf("This year it %s on a %s...%n", fallsFell, thisYearsBirthday.getDayOfWeek().toString().toUpperCase());
             System.out.printf("And since today is %s,%n", today.format(DateTimeFormatter.ofPattern("MM-dd-yyyy")));
-
-            final long daysLeft = today.until(birthdate).getDays();
-            final long age = birthdate.until(thisYearsBirthday).getYears();
-
-            System.out.printf("there's only %d more days until the next one when you turn %d!", daysLeft, age);
+            System.out.printf("there's only %d more days until the next one when you turn %d!", daysLeftToNextBirthday, age);
 
         } catch (RuntimeException rte) {
             System.out.println("Valid date formats are:");
