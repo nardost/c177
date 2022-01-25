@@ -49,7 +49,7 @@ public class BirthdayApplication {
             System.out.printf("That means you were born on a %s!%n", birthdate.getDayOfWeek().toString().toUpperCase());
             System.out.printf("This year it %s on a %s...%n", fallsFell, thisYearsBirthday.getDayOfWeek().toString().toUpperCase());
             System.out.printf("And since today is %s,%n", today.format(DateTimeFormatter.ofPattern("MM-dd-yyyy")));
-            System.out.printf("there's only %d more days until the next one when you turn %d!", daysLeftToNextBirthday, age);
+            System.out.printf("there's only %d more days until the next one when you turn %d!%n%n", daysLeftToNextBirthday, age);
 
         } catch (RuntimeException rte) {
             System.out.println("Valid date formats are:");
