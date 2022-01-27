@@ -35,8 +35,7 @@ public class GuestDao {
             final Statement statement = connection.createStatement();
             final ResultSet rs = statement.executeQuery("SELECT * FROM guests WHERE id = " + id);
             while(rs.next()) {
-                final Guest guest = GuestORM.mapToGuest(rs);
-                return guest;
+                return GuestORM.mapToGuest(rs);
             }
         }
         return null;
